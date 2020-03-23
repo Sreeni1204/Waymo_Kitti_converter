@@ -32,9 +32,7 @@
 
 ```
 
-4. 
-
-## Data specification
+## Info on Data
 
 ### Cameras
 
