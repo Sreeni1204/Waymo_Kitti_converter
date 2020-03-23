@@ -49,10 +49,13 @@ if __name__ == "__main__":
         pass
     else:
         os.makedirs(os.path.join(dest_folder, "Velodyne"))
-        os.makedirs(os.path.join(dest_folder, "Calibration"))
+        os.makedirs(os.path.join(dest_folder, "Calibration/Calib_all"))
         # os.makedirs(os.path.join(dest_folder, "Label_all"))
         os.makedirs(os.path.join(dest_folder, "Labels/Label_all"))
         subfolder_names1 = ['Labels/Label/0', 'Labels/Label/1', 'Labels/Label/2', 'Labels/Label/3', 'Labels/Label/4']
+        for folder_name in subfolder_names1:
+            os.makedirs(os.path.join(dest_folder, folder_name))
+        subfolder_names1 = ['Calibration/Calib/0', 'Calibration/Calib/1', 'Calibration/Calib/2', 'Calibration/Calib/3', 'Calibration/Calib/4']
         for folder_name in subfolder_names1:
             os.makedirs(os.path.join(dest_folder, folder_name))
         subfolder_names = ['Camera/Front', 'Camera/Front_left', 'Camera/Side_left', 'Camera/Front_right', 'Camera/Side_right']
@@ -65,7 +68,8 @@ if __name__ == "__main__":
     Front_right = os.path.join(dest_folder, "Camera/Front_right/")
     Side_right = os.path.join(dest_folder, "Camera/Side_right/")
     lidar = os.path.join(dest_folder, "Velodyne/")
-    Calib = os.path.join(dest_folder, "Calibration/")
+    Calib_all = os.path.join(dest_folder, "Calibration/Calib_all/")
+    Calib = os.path.join(dest_folder, "Calibration/Calib/")
     Label_all = os.path.join(dest_folder, "Labels/Label_all/")
     Label = os.path.join(dest_folder, "Labels/Label/")
 
@@ -74,9 +78,9 @@ if __name__ == "__main__":
     
     for filename in path:
 
-        # i = image_extractor(i, filename, Front, Front_left, Side_left, Front_right, Side_right)
-        # j = point_cloud_extractor(j, filename, lidar)
-        # k = calibration_extractor(k, filename, Calib)
+        i = image_extractor(i, filename, Front, Front_left, Side_left, Front_right, Side_right)
+        j = point_cloud_extractor(j, filename, lidar)
+        k = calibration_extractor(k, filename, Calib_all, Calib)
         l = label_extractor(l, filename, Label_all, Label)
         i = i
         j = j
