@@ -1,1 +1,75 @@
-# Waymo_Kitti_converter
+# Scripts for extracting data from Waymo Open Dataset to Kitti format
+
+> Author: **Sreenivasa Hikkal Venugopala**
+>
+> Contact: **hvsreenivasa93@gmail.com**
+
+## Instruction
+0. Clone the repository [Scripts](https://github.com/Sreeni1204/Waymo_Kitti_converter.git).
+1. Requirements - install Tensorflow 1.1x.x, waymo-open-dataset
+2. Download the Waymo open dataset and extract the content into a folder.
+3. Run the following command - python Waymo_to_kitti.py --source_folder=path/to/data --destination_folder=path/to/extract/data
+4. Output folders will have following sructure under destination folder.
+
+``` 
+.
+├── Calibration
+├── Camera
+│   ├── Front
+│   ├── Front_left
+│   ├── Front_right
+│   ├── Side_left
+│   └── Side_right
+├── Labels
+│   └── Label
+│   	├── 0
+│   	├── 1
+│   	├── 2
+│   	├── 3
+│   	└── 4
+│   └── Labels_all
+└── Velodyne
+
+```
+
+4. 
+
+## Data specification
+
+### Cameras
+
+Waymo has 5 cameras -  Front, Front_left, Front_right, Side_left, Side_right. Each is assigned with values from 0 to 4.
+
+
+### Label
+
+***Under construction***
+
+Consists of two sub folders.
+1. Labels - consists of labels for each individual cameras and folder names denotes what camera the label belongs. The number is mentiond in camera section.
+2. Labels_all - consists of all label in single file.
+
+All in vehicle frame.
+
+
+### Calib
+
+```
+P0-P4 : intrinsic matrix for each camera
+R0_rect : rectify matrix
+Tr_velo_to_cam_0 - Tr_velo_to_cam_4 : transformation matrix from vehicle frame to camera frame
+```
+
+
+### Lidar
+
+Point cloud in vehicle frame.
+
+```
+x y z reflectance
+```
+
+## References
+
+1. [Waymo open dataset](https://github.com/waymo-research/waymo-open-dataset)
+2. [Waymo_Kitti_Adapter](https://github.com/Yao-Shao/Waymo_Kitti_Adapter)
