@@ -8,8 +8,14 @@
 0. Clone the repository [Scripts](https://github.com/Sreeni1204/Waymo_Kitti_converter.git).
 1. Requirements - install Tensorflow 1.1x.x, waymo-open-dataset
 2. Download the Waymo open dataset and extract the content into a folder.
-3. Run the following command - python Waymo_to_kitti.py --source_folder=path/to/data --destination_folder=path/to/extract/data
-	1. Provided with more option to generate only velodyne lidar points with option "--velo", generate only camera images with option "--img" and to generate all use "--all"
+3. Run the following command - python Waymo_to_kitti.py --source_folder=path/to/data --destination_folder=path/to/extract/data --all
+	1. Provided with more command line options to generate
+	```
+	"--velo" - velodyne lidar points with option with camera calibration and labels
+	"--img" - camera images with option with camera calibration and labels
+	"--all" - to generate lidar, images, camera calibration and labels.
+	```
+	
 4. Output folders will have following sructure under destination folder.
 
 ``` 
