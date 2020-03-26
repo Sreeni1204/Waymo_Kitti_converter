@@ -28,13 +28,18 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--source_folder', help = 'provide source path', type=str)
-    parser.add_argument('--destination_folder', help='provide destinaetion path', type=str)
+    parser.add_argument('--source', help = 'provide source path', type=str)
+    parser.add_argument('--dest', help='provide destinaetion path', type=str)
+    parser.add_argument('--velo',action="store_true", help='extract only lidar data points, calibration parameters and labels')
+    parser.add_argument('--img',action="store_true", help='extract only camera images, calibration parameters and labels')
+    parser.add_argument('--all',action="store_true", help='extract only lidar data points, camera images, calibration parameters and labels')
+
 
     args = parser.parse_args()
 
-    source_folder = args.source_folder
-    dest_folder = args.destination_folder
+    source_folder = args.source
+    dest_folder = args.dest
+
 
     # files = [f for f in os.listdir(source_folder)]
     # path = [os.path.join(source_folder, f) for f in files]
@@ -75,17 +80,39 @@ if __name__ == "__main__":
 
     i, j, k, l = 0, 0, 0, 0
     print('Extraction process started:')
-    
-    for filename in path:
 
-        i = image_extractor(i, filename, Front, Front_left, Side_left, Front_right, Side_right)
-        j = point_cloud_extractor(j, filename, lidar)
-        k = calibration_extractor(k, filename, Calib_all, Calib)
-        l = label_extractor(l, filename, Label_all, Label)
-        i = i
-        j = j
-        k = k
-        l = l
+    if args.velo:
+        for filename in path:
+
+            j = point_cloud_extractor(j, filename, lidar)
+            k = calibration_extractor(k, filename, Calib_all, Calib)
+            l = label_extractor(l, filename, Label_all, Label)
+            j = j
+            k = k
+            l = l
+
+    if args.img:
+        for filename in path:
+
+            i = image_extractor(i, filename, Front, Front_left, Side_left, Front_right, Side_right)
+            k = calibration_extractor(k, filename, Calib_all, Calib)
+            l = label_extractor(l, filename, Label_all, Label)
+            i = i
+            k = k
+            l = l
+    
+    if args.all:
+
+        for filename in path:
+
+            i = image_extractor(i, filename, Front, Front_left, Side_left, Front_right, Side_right)
+            j = point_cloud_extractor(j, filename, lidar)
+            k = calibration_extractor(k, filename, Calib_all, Calib)
+            l = label_extractor(l, filename, Label_all, Label)
+            i = i
+            j = j
+            k = k
+            l = l
 
     print('Number of images extracted:', i)
     print('Number of point clouds extracted:', j)
