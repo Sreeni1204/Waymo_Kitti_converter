@@ -43,6 +43,7 @@ def calibration_extractor(i, filename, Calib_all, Calib):
         for camera in frame.context.camera_calibrations:
             tmp=np.array(camera.extrinsic.transform).reshape(4,4)
             tmp=np.linalg.inv(tmp).reshape((16,))
+            tmp=tmp[:-4]
             Tr_velo_to_cam.append(["%e" % i for i in tmp])
 
         for cam in frame.context.camera_calibrations:
@@ -66,31 +67,31 @@ def calibration_extractor(i, filename, Calib_all, Calib):
         for a, nam in enumerate(name):
             if nam == '0':
                 calib_context0 = calib_context
-                calib_context0 += "Tr_velo_to_cam_" + str(a) + ": " + " ".join(Tr_velo_to_cam[0]) + '\n'
+                calib_context0 += "Tr_velo_to_cam" + ": " + " ".join(Tr_velo_to_cam[0]) + '\n'
                 fp_label0 = open(Calib + nam + '/' + name_of_file, 'a')
                 fp_label0.write(calib_context0)
                 fp_label0.close()
             elif nam == '1':
                 calib_context1 = calib_context
-                calib_context1 += "Tr_velo_to_cam_" + str(a) + ": " + " ".join(Tr_velo_to_cam[1]) + '\n'
+                calib_context1 += "Tr_velo_to_cam" + ": " + " ".join(Tr_velo_to_cam[1]) + '\n'
                 fp_label1 = open(Calib + nam + '/' + name_of_file, 'a')
                 fp_label1.write(calib_context1)
                 fp_label1.close()
             elif nam == '2':
                 calib_context2 = calib_context
-                calib_context2 += "Tr_velo_to_cam_" + str(a) + ": " + " ".join(Tr_velo_to_cam[2]) + '\n'
+                calib_context2 += "Tr_velo_to_cam" + ": " + " ".join(Tr_velo_to_cam[2]) + '\n'
                 fp_label2 = open(Calib + nam + '/' + name_of_file, 'a')
                 fp_label2.write(calib_context2)
                 fp_label2.close()
             elif nam == '3':
                 calib_context3 = calib_context
-                calib_context3 += "Tr_velo_to_cam_" + str(a) + ": " + " ".join(Tr_velo_to_cam[3]) + '\n'
+                calib_context3 += "Tr_velo_to_cam" + ": " + " ".join(Tr_velo_to_cam[3]) + '\n'
                 fp_label3 = open(Calib + nam + '/' + name_of_file, 'a')
                 fp_label3.write(calib_context3)
                 fp_label3.close()
             elif nam == '4':
                 calib_context4 = calib_context
-                calib_context4 += "Tr_velo_to_cam_" + str(a) + ": " + " ".join(Tr_velo_to_cam[4]) + '\n'        
+                calib_context4 += "Tr_velo_to_cam" + ": " + " ".join(Tr_velo_to_cam[4]) + '\n'        
                 fp_label4 = open(Calib + nam + '/' + name_of_file, 'a')
                 fp_label4.write(calib_context4)
                 fp_label4.close()
