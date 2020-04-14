@@ -45,38 +45,34 @@ if __name__ == "__main__":
     # path = [os.path.join(source_folder, f) for f in files]
     path = File_names_and_path(source_folder)
 
-    isExist = os.path.exists(os.path.join(dest_folder, 'Camera'))
-    isExist1 = os.path.exists(os.path.join(dest_folder, 'Velodyne'))
-    isExist2 = os.path.exists(os.path.join(dest_folder, 'Calibration'))
-    # isExist3 = os.path.exists(os.path.join(dest_folder, 'Label_all'))
-    isExist3 = os.path.exists(os.path.join(dest_folder, 'Labels'))
-    if isExist and isExist1 and isExist2 and isExist3:
+    isExist = os.path.exists(os.path.join(dest_folder, 'Output'))
+
+    if isExist:
         pass
     else:
-        os.makedirs(os.path.join(dest_folder, "Velodyne"))
-        os.makedirs(os.path.join(dest_folder, "Calibration/Calib_all"))
-        # os.makedirs(os.path.join(dest_folder, "Label_all"))
-        os.makedirs(os.path.join(dest_folder, "Labels/Label_all"))
-        subfolder_names1 = ['Labels/Label/0', 'Labels/Label/1', 'Labels/Label/2', 'Labels/Label/3', 'Labels/Label/4']
+        os.makedirs(os.path.join(dest_folder, "Output/Velodyne"))
+        os.makedirs(os.path.join(dest_folder, "Output/Calibration/Calib_all"))
+        os.makedirs(os.path.join(dest_folder, "Output/Labels/Label_all"))
+        subfolder_names1 = ['Output/Labels/Label/0', 'Output/Labels/Label/1', 'Output/Labels/Label/2', 'Output/Labels/Label/3', 'Output/Labels/Label/4']
         for folder_name in subfolder_names1:
             os.makedirs(os.path.join(dest_folder, folder_name))
-        subfolder_names1 = ['Calibration/Calib/0', 'Calibration/Calib/1', 'Calibration/Calib/2', 'Calibration/Calib/3', 'Calibration/Calib/4']
+        subfolder_names1 = ['Output/Calibration/Calib/0', 'Output/Calibration/Calib/1', 'Output/Calibration/Calib/2', 'Output/Calibration/Calib/3', 'Output/Calibration/Calib/4']
         for folder_name in subfolder_names1:
             os.makedirs(os.path.join(dest_folder, folder_name))
-        subfolder_names = ['Camera/Front', 'Camera/Front_left', 'Camera/Side_left', 'Camera/Front_right', 'Camera/Side_right']
+        subfolder_names = ['Output/Camera/Front', 'Output/Camera/Front_left', 'Output/Camera/Side_left', 'Output/Camera/Front_right', 'Output/Camera/Side_right']
         for folder_name in subfolder_names:
             os.makedirs(os.path.join(dest_folder, folder_name))
 
-    Front = os.path.join(dest_folder, "Camera/Front/")
-    Front_left = os.path.join(dest_folder, "Camera/Front_left/")
-    Side_left = os.path.join(dest_folder, "Camera/Side_left/")
-    Front_right = os.path.join(dest_folder, "Camera/Front_right/")
-    Side_right = os.path.join(dest_folder, "Camera/Side_right/")
-    lidar = os.path.join(dest_folder, "Velodyne/")
-    Calib_all = os.path.join(dest_folder, "Calibration/Calib_all/")
-    Calib = os.path.join(dest_folder, "Calibration/Calib/")
-    Label_all = os.path.join(dest_folder, "Labels/Label_all/")
-    Label = os.path.join(dest_folder, "Labels/Label/")
+    Front = os.path.join(dest_folder, "Output/Camera/Front/")
+    Front_left = os.path.join(dest_folder, "Output/Camera/Front_left/")
+    Side_left = os.path.join(dest_folder, "Output/Camera/Side_left/")
+    Front_right = os.path.join(dest_folder, "Output/Camera/Front_right/")
+    Side_right = os.path.join(dest_folder, "Output/Camera/Side_right/")
+    lidar = os.path.join(dest_folder, "Output/Velodyne/")
+    Calib_all = os.path.join(dest_folder, "Output/Calibration/Calib_all/")
+    Calib = os.path.join(dest_folder, "Output/Calibration/Calib/")
+    Label_all = os.path.join(dest_folder, "Output/Labels/Label_all/")
+    Label = os.path.join(dest_folder, "Output/Labels/Label/")
 
     i, j, k, l = 0, 0, 0, 0
     print('Extraction process started:')
