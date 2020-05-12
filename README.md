@@ -7,9 +7,9 @@
 ## Instruction
 0. Clone the repository [Scripts](https://github.com/Sreeni1204/Waymo_Kitti_converter.git).
 1. Requirements: Install following libraries
-	Tensorflow 1.15.0 
-	waymo-open-dataset
-	OpenCV-python
+	1. Tensorflow 1.15.0 
+	2. waymo-open-dataset
+	3. OpenCV-python
 	
 2. Download the Waymo open dataset and extract the content into a folder.
 3. Run the following command - python Waymo_to_kitti.py --source_folder=path/to/data --destination_folder=path/to/extract/data --all
@@ -68,8 +68,8 @@ Consists of two sub folders.
 2. Labels_all - consists of all label in single file.
 
 Labels in kitti format with basic occlusion information as follows:
-occlusion level 1 - for occluded objects.
-occlusion level 0 - for non occluded objects.
+	1. occlusion level 1 - for occluded objects.
+	2. occlusion level 0 - for non occluded objects.
 
 All in vehicle frame.
 
