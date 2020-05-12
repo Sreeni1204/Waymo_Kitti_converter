@@ -5,6 +5,7 @@ from Image_extractor import *
 from Lidar_pointcloud_extractor import *
 from Calibration_extractor import *
 from Label_extractor import *
+from Label_ext_with_occlusion import *
 
 def File_names_and_path(source_folder):
 
@@ -32,7 +33,8 @@ if __name__ == "__main__":
     parser.add_argument('--dest', help='provide destinaetion path', type=str)
     parser.add_argument('--velo',action="store_true", help='extract only lidar data points, calibration parameters and labels')
     parser.add_argument('--img',action="store_true", help='extract only camera images, calibration parameters and labels')
-    parser.add_argument('--all',action="store_true", help='extract only lidar data points, camera images, calibration parameters and labels')
+    parser.add_argument('--all',action="store_true", help='extract lidar data points, camera images, calibration parameters and labels')
+    parser.add_argument('--oclu',action="store_true", help='extract lidar data points, camera images, calibration parameters and labels with occlusion details')
 
 
     args = parser.parse_args()
@@ -105,6 +107,19 @@ if __name__ == "__main__":
             j = point_cloud_extractor(j, filename, lidar)
             k = calibration_extractor(k, filename, Calib_all, Calib)
             l = label_extractor(l, filename, Label_all, Label)
+            i = i
+            j = j
+            k = k
+            l = l
+
+    if args.oclu:
+
+        for filename in path:
+
+            i = image_extractor(i, filename, Front, Front_left, Side_left, Front_right, Side_right)
+            j = point_cloud_extractor(j, filename, lidar)
+            k = calibration_extractor(k, filename, Calib_all, Calib)
+            l = label_ext_with_occlusion(l, filename, Label_all, Label)
             i = i
             j = j
             k = k

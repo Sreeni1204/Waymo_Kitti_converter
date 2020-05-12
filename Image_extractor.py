@@ -1,12 +1,8 @@
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.image as im
 import tensorflow as tf
 import itertools
 import math
 import os
-import argparse
-import sys
 import cv2
 
 tf.enable_eager_execution()

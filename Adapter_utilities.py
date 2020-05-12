@@ -121,3 +121,18 @@ def convert_range_image_to_point_cloud(frame,
         reflectance.append(reflectance_tensor.numpy()[:,1])
 
     return points, reflectance
+
+def get_box_transformation_matrix(box):
+    """Create a transformation matrix for a given label box pose."""
+
+    tx,ty,tz = box.center_x,box.center_y,box.center_z
+    c = math.cos(box.heading)
+    s = math.sin(box.heading)
+
+    sl, sh, sw = box.length, box.height, box.width
+
+    return np.array([
+        [ sl*c,-sw*s,  0,tx],
+        [ sl*s, sw*c,  0,ty],
+        [    0,    0, sh,tz],
+        [    0,    0,  0, 1]])

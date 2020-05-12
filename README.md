@@ -6,7 +6,11 @@
 
 ## Instruction
 0. Clone the repository [Scripts](https://github.com/Sreeni1204/Waymo_Kitti_converter.git).
-1. Requirements - install Tensorflow 1.1x.x, waymo-open-dataset
+1. Requirements: Install following libraries
+	Tensorflow 1.15.0 
+	waymo-open-dataset
+	OpenCV-python
+	
 2. Download the Waymo open dataset and extract the content into a folder.
 3. Run the following command - python Waymo_to_kitti.py --source_folder=path/to/data --destination_folder=path/to/extract/data --all
 	1. Provided with more command line options to generate
@@ -14,12 +18,14 @@
 	"--velo" - velodyne lidar points with option with camera calibration and labels
 	"--img" - camera images with option with camera calibration and labels
 	"--all" - to generate lidar, images, camera calibration and labels.
+	"--oclu" - to generate lidar, images, camera calibration and labels with basic occlusion information.
 	```
 	
 4. Output folders will have following sructure under destination folder.
 
 ``` 
 .
+Output
 ├── Calibration
 │   └── Calib
 │   	├── 0
@@ -61,6 +67,10 @@ Consists of two sub folders.
 1. Labels - consists of labels for each individual cameras and folder names denotes what camera the label belongs. The number is mentiond in camera section.
 2. Labels_all - consists of all label in single file.
 
+Labels in kitti format with basic occlusion information as follows:
+occlusion level 1 - for occluded objects.
+occlusion level 0 - for non occluded objects.
+
 All in vehicle frame.
 
 
@@ -90,3 +100,4 @@ x y z reflectance
 
 1. [Waymo open dataset](https://github.com/waymo-research/waymo-open-dataset)
 2. [Waymo_Kitti_Adapter](https://github.com/Yao-Shao/Waymo_Kitti_Adapter)
+3. [simple-waymo-open-dataset-reader](https://github.com/gdlg/simple-waymo-open-dataset-reader)

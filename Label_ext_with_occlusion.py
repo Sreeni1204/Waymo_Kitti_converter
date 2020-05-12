@@ -1,6 +1,5 @@
 import numpy as np
 import tensorflow as tf
-import itertools
 import math
 import os
 
@@ -11,8 +10,9 @@ from waymo_open_dataset.utils import range_image_utils
 from waymo_open_dataset.utils import transform_utils
 from waymo_open_dataset.utils import  frame_utils
 from waymo_open_dataset import dataset_pb2 as open_dataset
+from Adapter_utilities import *
 
-def label_extractor(i, filename, Label_all, Label):
+def label_ext_with_occlusion(i, filename, Label_all, Label):
 
     FileName = filename
     dataset = tf.data.TFRecordDataset(FileName, compression_type='')
@@ -41,7 +41,26 @@ def label_extractor(i, filename, Label_all, Label):
                 id_to_bbox[label.id] = bbox
                 id_to_name[label.id] = name - 1
 
-        for obj in frame.laser_labels:
+        laser = open_dataset.LaserName.TOP
+        laser_calib = [obj for obj in frame.context.laser_calibrations if obj.name == laser]
+        laser_calib = laser_calib[0]
+
+        RI, CP, RITP = frame_utils.parse_range_image_and_camera_projection(frame)
+
+        pcl, pcl_attr = frame_utils.convert_range_image_to_point_cloud(frame, RI, CP, RITP)
+        pcl = np.concatenate(pcl, axis=0)
+
+        vehicle_to_labels = [np.linalg.inv(get_box_transformation_matrix(label.box)) for label in frame.laser_labels]
+        vehicle_to_labels = np.stack(vehicle_to_labels)
+        
+        pcl1 = np.concatenate((pcl,np.ones_like(pcl[:,0:1])),axis=1)
+        proj_pcl = np.einsum('lij,bj->lbi', vehicle_to_labels, pcl1)
+        mask = np.logical_and.reduce(np.logical_and(proj_pcl >= -1, proj_pcl <= 1),axis=2)
+    
+        counts = mask.sum(1)
+        visibility = counts > 10
+
+        for obj, visib in zip(frame.laser_labels, visibility):
 
             # caculate bounding box
             bounding_box = None
@@ -56,8 +75,11 @@ def label_extractor(i, filename, Label_all, Label):
                 continue
 
             my_type = __type_list[obj.type]
+            if visib:
+                occluded = 0
+            else:
+                occluded = 1
             truncated = 0
-            occluded = 0
             height = obj.box.height
             width = obj.box.width
             length = obj.box.length
