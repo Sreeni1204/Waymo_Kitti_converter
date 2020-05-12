@@ -13,7 +13,7 @@
 	
 3. Download the Waymo open dataset and extract the content into a folder.
 4. Run the following command - 
-"python Waymo_to_kitti.py --source=path/to/tfrecord_data --destr=path/to/extract/data --all"
+"python Waymo_to_kitti.py --source=path/to/tfrecord_data_folder --dest=path/to/extract/data --all"
 	1. Provided with more command line options to generate
 	```
 	"--velo" - velodyne lidar points with option with camera calibration and labels
