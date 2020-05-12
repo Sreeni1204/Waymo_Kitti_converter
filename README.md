@@ -5,14 +5,14 @@
 > Contact: **hvsreenivasa93@gmail.com**
 
 ## Instruction
-0. Clone the repository [Scripts](https://github.com/Sreeni1204/Waymo_Kitti_converter.git).
-1. Requirements: Install following libraries
+1. Clone the repository [Scripts](https://github.com/Sreeni1204/Waymo_Kitti_converter.git).
+2. Requirements: Install following libraries
 	1. Tensorflow 1.15.0 
 	2. waymo-open-dataset
 	3. OpenCV-python
 	
-2. Download the Waymo open dataset and extract the content into a folder.
-3. Run the following command - python Waymo_to_kitti.py --source_folder=path/to/data --destination_folder=path/to/extract/data --all
+3. Download the Waymo open dataset and extract the content into a folder.
+4. Run the following command - python Waymo_to_kitti.py --source_folder=path/to/data --destination_folder=path/to/extract/data --all
 	1. Provided with more command line options to generate
 	```
 	"--velo" - velodyne lidar points with option with camera calibration and labels
@@ -21,7 +21,7 @@
 	"--oclu" - to generate lidar, images, camera calibration and labels with basic occlusion information.
 	```
 	
-4. Output folders will have following sructure under destination folder.
+5. Output folders will have following sructure under destination folder.
 
 ``` 
 .
@@ -68,8 +68,8 @@ Consists of two sub folders.
 2. Labels_all - consists of all label in single file.
 
 Labels in kitti format with basic occlusion information as follows:
-	1. occlusion level 1 - for occluded objects.
-	2. occlusion level 0 - for non occluded objects.
+1. occlusion level 1 - for occluded objects.
+2. occlusion level 0 - for non occluded objects.
 
 All in vehicle frame.
 
