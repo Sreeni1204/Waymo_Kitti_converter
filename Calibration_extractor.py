@@ -38,8 +38,9 @@ def calibration_extractor(i, filename, Calib_all, Calib):
 
         for camera in frame.context.camera_calibrations:
             tmp=np.array(camera.extrinsic.transform).reshape(4,4)
-            tmp=np.linalg.inv(tmp).reshape((16,))
-            tmp=tmp[:-4]
+            tmp=np.linalg.inv(tmp)
+            tmp = np.matmul(waymo_cam_RT, tmp).reshape((16,))
+            tmp = tmp[:-4]
             Tr_velo_to_cam.append(["%e" % i for i in tmp])
 
         for cam in frame.context.camera_calibrations:
@@ -49,7 +50,7 @@ def calibration_extractor(i, filename, Calib_all, Calib):
             tmp[0,2]=cam.intrinsic[2]
             tmp[1,2]=cam.intrinsic[3]
             tmp[2,2]=1
-            tmp=(tmp @ waymo_cam_RT)
+            # tmp=(tmp @ waymo_cam_RT)
             tmp=list(tmp.reshape(12))
             tmp = ["%e" % a for a in tmp]
             calib_cam.append(tmp)

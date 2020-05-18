@@ -11,6 +11,7 @@ from waymo_open_dataset.utils import range_image_utils
 from waymo_open_dataset.utils import transform_utils
 from waymo_open_dataset.utils import  frame_utils
 from waymo_open_dataset import dataset_pb2 as open_dataset
+from Adapter_utilities import *
 
 def label_extractor(i, filename, Label_all, Label):
 
@@ -41,6 +42,19 @@ def label_extractor(i, filename, Label_all, Label):
                 id_to_bbox[label.id] = bbox
                 id_to_name[label.id] = name - 1
 
+        Tr_velo_to_cam = []
+
+        
+        for camera in frame.context.camera_calibrations:
+            tmp=np.array(camera.extrinsic.transform).reshape(4,4)
+            tmp=np.linalg.inv(tmp)
+            axes_transformation = np.array([[0,-1,0,0],
+                                        [0,0,-1,0],
+                                        [1,0,0,0],
+                                        [0,0,0,1]])
+            tmp = np.matmul(axes_transformation, tmp)
+            Tr_velo_to_cam.append(tmp)
+
         for obj in frame.laser_labels:
 
             # caculate bounding box
@@ -65,6 +79,21 @@ def label_extractor(i, filename, Label_all, Label):
             y = obj.box.center_y
             z = obj.box.center_z
             rotation_y = obj.box.heading
+
+            z -= height/2
+                
+            transform_box_to_cam = Tr_velo_to_cam[int(name)] @ get_box_transformation_matrix(obj.box)
+            pt1 = np.array([-0.5, 0.5, 0 , 1.])
+            pt2 = np.array([0.5, 0.5, 0 , 1.])
+            pt1 = np.matmul(transform_box_to_cam, pt1)
+            pt2 = np.matmul(transform_box_to_cam, pt2)
+            new_ry = math.atan2(pt2[2]-pt1[2],pt2[0]-pt1[0])
+            rotation_y = -new_ry
+
+            new_loc = np.matmul(Tr_velo_to_cam[int(name)], np.array([x,y,z,1]).T)
+            x, y, z = new_loc[:3]
+
+
             beta = math.atan2(x, z)
             alpha = (rotation_y + beta - math.pi / 2) % (2 * math.pi)
 
