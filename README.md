@@ -100,5 +100,5 @@ x y z reflectance
 ## References
 
 1. [Waymo open dataset](https://github.com/waymo-research/waymo-open-dataset)
-2. [Waymo_Kitti_Adapter](https://github.com/Yao-Shao/Waymo_Kitti_Adapter)
+2. [Waymo_Kitti_Adapter](https://github.com/RocketFlash/Waymo_Kitti_Adapter)
 3. [simple-waymo-open-dataset-reader](https://github.com/gdlg/simple-waymo-open-dataset-reader)

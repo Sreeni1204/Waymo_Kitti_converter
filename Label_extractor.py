@@ -43,16 +43,12 @@ def label_extractor(i, filename, Label_all, Label):
                 id_to_name[label.id] = name - 1
 
         Tr_velo_to_cam = []
-
+        waymo_cam_RT = np.array([0,-1,0,0,  0,0,-1,0,   1,0,0,0,    0 ,0 ,0 ,1]).reshape(4,4)
         
         for camera in frame.context.camera_calibrations:
             tmp=np.array(camera.extrinsic.transform).reshape(4,4)
             tmp=np.linalg.inv(tmp)
-            axes_transformation = np.array([[0,-1,0,0],
-                                        [0,0,-1,0],
-                                        [1,0,0,0],
-                                        [0,0,0,1]])
-            tmp = np.matmul(axes_transformation, tmp)
+            tmp = np.matmul(waymo_cam_RT, tmp)
             Tr_velo_to_cam.append(tmp)
 
         for obj in frame.laser_labels:

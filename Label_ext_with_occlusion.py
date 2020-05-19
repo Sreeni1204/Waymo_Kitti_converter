@@ -41,6 +41,15 @@ def label_ext_with_occlusion(i, filename, Label_all, Label):
                 id_to_bbox[label.id] = bbox
                 id_to_name[label.id] = name - 1
 
+        Tr_velo_to_cam = []
+        waymo_cam_RT = np.array([0,-1,0,0,  0,0,-1,0,   1,0,0,0,    0 ,0 ,0 ,1]).reshape(4,4)
+        
+        for camera in frame.context.camera_calibrations:
+            tmp=np.array(camera.extrinsic.transform).reshape(4,4)
+            tmp=np.linalg.inv(tmp)
+            tmp = np.matmul(waymo_cam_RT, tmp)
+            Tr_velo_to_cam.append(tmp)
+
         laser = open_dataset.LaserName.TOP
         laser_calib = [obj for obj in frame.context.laser_calibrations if obj.name == laser]
         laser_calib = laser_calib[0]
@@ -79,7 +88,7 @@ def label_ext_with_occlusion(i, filename, Label_all, Label):
                 occluded = 0
             else:
                 occluded = 1
-            truncated = 0
+            truncated = 0.00
             height = obj.box.height
             width = obj.box.width
             length = obj.box.length
@@ -87,6 +96,20 @@ def label_ext_with_occlusion(i, filename, Label_all, Label):
             y = obj.box.center_y
             z = obj.box.center_z
             rotation_y = obj.box.heading
+
+            z -= height/2
+                
+            transform_box_to_cam = Tr_velo_to_cam[int(name)] @ get_box_transformation_matrix(obj.box)
+            pt1 = np.array([-0.5, 0.5, 0 , 1.])
+            pt2 = np.array([0.5, 0.5, 0 , 1.])
+            pt1 = np.matmul(transform_box_to_cam, pt1)
+            pt2 = np.matmul(transform_box_to_cam, pt2)
+            new_ry = math.atan2(pt2[2]-pt1[2],pt2[0]-pt1[0])
+            rotation_y = -new_ry
+
+            new_loc = np.matmul(Tr_velo_to_cam[int(name)], np.array([x,y,z,1]).T)
+            x, y, z = new_loc[:3]
+            
             beta = math.atan2(x, z)
             alpha = (rotation_y + beta - math.pi / 2) % (2 * math.pi)
 
