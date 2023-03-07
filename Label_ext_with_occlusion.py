@@ -2,7 +2,8 @@ import numpy as np
 import tensorflow as tf
 import math
 import os
-
+# add v2 compability adaptation
+import tensorflow.compat.v1 as tf
 tf.enable_eager_execution()
 
 import waymo_open_dataset
