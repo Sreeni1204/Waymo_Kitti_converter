@@ -4,6 +4,9 @@ import itertools
 import math
 import os
 
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 tf.enable_eager_execution()
 
 import waymo_open_dataset
