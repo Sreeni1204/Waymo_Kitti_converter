@@ -3,7 +3,8 @@
 > Author: **Sreenivasa Hikkal Venugopala**
 >
 > Contact: **hvsreenivasa93@gmail.com**
-
+## Update
++ (March, 2023) mention that the origin tool doesn't compatible with tensorflow v2, we add tensorflow v2 capability for this version.
 ## Instruction
 1. Clone the repository [Scripts](https://github.com/Sreeni1204/Waymo_Kitti_converter.git).
 2. Requirements: Install following libraries
